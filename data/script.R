@@ -27,6 +27,8 @@ for (i in 1:ncol(deltEMatrix)) {
 }
 
 
+deltEMatrix
+
 countLevel1 <- sum(deltEMatrix<=1)
 countLevel1
 countLevel2 <- sum((deltEMatrix>1) & (deltEMatrix<2))
@@ -37,6 +39,15 @@ countLevel4 <- sum((deltEMatrix>11) & (deltEMatrix<49))
 countLevel4
 countLevel5 <- sum(deltEMatrix>50)
 countLevel5
+levelcount<-c(countLevel1,countLevel2,countLevel3,countLevel4,countLevel5)
+level <-c("Not Perceptable","Hardly Perceptable","At Glance","very Perceptible","Opposite")
+#count of color spots 
+barplot(levelcount,(1:5),names.arg = level)
+?barplot
+
+meanErrorPerColourCard <- rowMeans(deltEMatrix)
+
+barplot(meanErrorPerColourCard, 1:5, names.arg = level)
 
 
 
