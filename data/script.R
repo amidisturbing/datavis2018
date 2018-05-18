@@ -47,9 +47,6 @@ barplot(levelcount,(1:5),names.arg = level)
 
 meanErrorPerColourCard <- rowMeans(deltEMatrix)
 
-barplot(meanErrorPerColourCard, 1:5, names.arg = level)
+hist(meanErrorPerColourCard, breaks="Sturge", col="grey", labels = T,main="colour card errors")
 
-
-
-
-
+plot(density(meanErrorPerColourCard))
