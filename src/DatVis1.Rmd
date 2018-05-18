@@ -1,0 +1,45 @@
+---
+title: "Data Visualization Task 1"
+author: 
+- name: Alexander Jänisch, Parvin, Rafaela Neff
+  affiliation: Beuth University of Applied Sience Berlin
+date: "Summer Term 2018"
+output: 
+  html_document: 
+    fig_caption: yes
+    highlight: tango
+    number_sections: yes
+    theme: spacelab
+    toc: yes
+    toc_float: yes
+---
+
+```{r setup, include=FALSE}
+library(knitr) #to set up options and use kable function
+opts_chunk$set(echo = FALSE) #(echo = TRUE) would include all code
+
+```
+
+# Introduction
+
+Include ***code results***
+
+```{r cars, echo=TRUE}
+summary(cars)
+```
+The `echo = TRUE` parameter was added to the code chunk for printing the R code that has generated the plot.
+
+## Including Plots
+
+Embed plot with a caption for Figure 1.
+
+```{r fig.cap="This is a capture for Figure 1."}
+plot(pressure)
+```
+
+## Tables
+nice looking table
+```{r}
+myTable <- xtabs(pressure, data = pressure)
+kable(myTable, caption = "Table caption.")
+```
