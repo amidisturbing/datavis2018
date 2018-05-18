@@ -21,8 +21,22 @@ x<-sweep(deltaMatrixPowerTwo,2,c(1:3),"+")
 
 emptymat <- matrix(NA, nrow = 546, ncol = 64, byrow = FALSE)
 
+
+
+
 for (i in 1:ncol(emptymat)) {
   emptymat[,i] <- sqrt(rowSums(deltaMatrixPowerTwo[,(i-1)*3+(1:3)]))
 }
-emptymat
+
+
+countLevel1 <- sum(emptymat<=1)
+countLevel1
+countLevel2 <- sum((emptymat>1) & (emptymat<2))
+countLevel2
+countLevel3 <- sum((emptymat>2) & (emptymat<10))
+countLevel3
+countLevel4 <- sum((emptymat>11) & (emptymat<49))
+countLevel4
+countLevel5 <- sum(emptymat>50)
+countLevel5
 
