@@ -1,0 +1,17 @@
+lab <- read.csv2("/home/alex/Downloads/LabMeasurements-Color-Card.csv")
+Master <- read.csv2("/home/alex/Downloads/MasterColorCard.csv")
+
+#t() tranposes the matrix  and c() puts it all into one row
+MasterInOneRow <- c(t(as.matrix(Master[,9:11])))
+MasterInOneRow
+#creates a matrix by repeating the rows to fit the lab data 
+MasterRepeated <- matrix(rep(MasterInOneRow, 13*42), byrow = TRUE,nrow = 13*42)
+MasterRepeated
+LabWithoutFirstColumns <- lab[,-c(1:2)]
+
+deltaMatrix <- MasterRepeated - LabWithoutFirstColumns
+
+print(deltaMatrix)
+deltaMatrixPowerTwo <- deltaMatrix^2
+
+deltaMatrixPowerTwo
