@@ -1,5 +1,5 @@
-lab <- read.csv2("/home/alex/Downloads/LabMeasurements-Color-Card.csv")
-Master <- read.csv2("/home/alex/Downloads/MasterColorCard.csv")
+lab <- read.csv2("data/LabMeasurements-Color-Card.csv")
+Master <- read.csv2("data/MasterColorCard.csv")
 
 #t() tranposes the matrix  and c() puts it all into one row
 MasterInOneRow <- c(t(as.matrix(Master[,9:11])))
