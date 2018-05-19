@@ -1,3 +1,4 @@
+setwd("datavis2018")
 lab <- read.csv2("data/LabMeasurements-Color-Card.csv")
 Master <- read.csv2("data/MasterColorCard.csv")
 
@@ -16,17 +17,30 @@ deltaMatrixPowerTwo <- deltaMatrix^2
 
 deltaMatrixPowerTwo
 dim(deltaMatrixPowerTwo)
-
+#deltEMatrix contains Lab Errors for each spot (one row is one colour card)
 deltEMatrix <- matrix(NA, nrow = 546, ncol = 64, byrow = FALSE)
-
-
-
 
 for (i in 1:ncol(deltEMatrix)) {
   deltEMatrix[,i] <- sqrt(rowSums(deltaMatrixPowerTwo[,(i-1)*3+(1:3)]))
 }
 
-#deltEMatrix contains Lab Errors for each spot (one row is one colour card)
+deltaERangePerCard  <- matrix(NA, nrow = nrow(deltEMatrix), ncol = 2, byrow = FALSE)
+rownames(deltaERangePerCard) <- c(1:nrow(deltEMatrix))
+colnames(deltaERangePerCard) <- c("Minimum","Maximum")
+#deltaERangePerCard <- as.table(deltaERangePerCard)
+#deltaERangePerCard["Minimum"] 
+
+for (i in 1:nrow(deltEMatrix)) {
+  rafMin <- min(deltEMatrix[i,])
+  rafMax <- max(deltEMatrix[i,])
+  minIndex <- match(c(rafMin),deltEMatrix[i,])
+  maxIndex <- match(c(rafMax),deltEMatrix[i,])
+  print(c(i, rafMin, minIndex, rafMax, maxIndex))
+  deltaERangePerCard[i,"Minimum"] <- min(deltEMatrix[i,])
+  deltaERangePerCard[i,"Maximum"] <- max(deltEMatrix[i,])
+}
+
+
 deltEMatrix
 which(deltEMatrix<=1, arr.ind=TRUE)
 countLevel1 <- sum(deltEMatrix<=1)
@@ -64,12 +78,11 @@ for (i in 1:13) {
 }
 print(meanErrorPerSample)
 
-library(colorspace)
 
-z <- c("20 0 0", "50 0 0")
-b <- do.call(rbind, lapply(strsplit(z, split = " "), as.numeric))
-b <- LAB(b)
-as(b, "RGB")
+#z <- c("20 0 0", "50 0 0")
+#b <- do.call(rbind, lapply(strsplit(z, split = " "), as.numeric))
+#b <- LAB(b)
+#as(b, "RGB")
 
 
 
