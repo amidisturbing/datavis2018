@@ -3,8 +3,6 @@ setwd("datavis2018")
 lab <- read.csv2("data/LabMeasurements-Color-Card.csv")
 Master <- read.csv2("data/MasterColorCard.csv")
 
-#set plot matrix
-par(mfrow=c(2,2))
 #t() tranposes the matrix  and c() puts it all into one row
 MasterAsOneRow <- c(t(as.matrix(Master[,9:11])))
 
@@ -77,26 +75,69 @@ for (i in 1:13) {
 
 #try to get back from error to lab values in table
 #get indexes of errors in certain level
-indexMatrix <- which(SpotErrorMatrix<=1, arr.ind=TRUE)
+LumenIndexVisLvlOne <- which(SpotErrorMatrix<=1, arr.ind=TRUE)
+LumenIndexVisLvlTwo <- which(((SpotErrorMatrix>1) & (SpotErrorMatrix<2)), arr.ind=TRUE)
+LumenIndexVisLvlThree <- which(((SpotErrorMatrix>2) & (SpotErrorMatrix<10)), arr.ind=TRUE)
+LumenIndexVisLvlFour <- which(((SpotErrorMatrix>11) & (SpotErrorMatrix<49)), arr.ind=TRUE)
 #create helper to retrieve indexes of L values
 columnIndexesInLabMatrix<-seq(from=1, to=192,by=3)
 #create matrix to fill
-LabForLevel <- matrix(NA, nrow = nrow(indexMatrix), ncol = 3, byrow = FALSE)
+LabVisLevelOne <- matrix(NA, nrow = nrow(LumenIndexVisLvlOne), ncol = 3, byrow = FALSE)
+LabVisLevelTwo <- matrix(NA, nrow = nrow(LumenIndexVisLvlTwo), ncol = 3, byrow = FALSE)
+LabVisLevelThree <- matrix(NA, nrow = nrow(LumenIndexVisLvlThree), ncol = 3, byrow = FALSE)
+LabVisLevelFour <- matrix(NA, nrow = nrow(LumenIndexVisLvlFour), ncol = 3, byrow = FALSE)
 
 #get the lab values for each element of the index list
-for(i in 1:nrow(indexMatrix)){
-  LabForLevel[i,1]<-LabWithoutFirstColumns[indexMatrix[i,1],columnIndexesInLabMatrix[indexMatrix[i,2]]]
-  LabForLevel[i,2]<-LabWithoutFirstColumns[indexMatrix[i,1],columnIndexesInLabMatrix[indexMatrix[i,2]]+1]
-  LabForLevel[i,3]<-LabWithoutFirstColumns[indexMatrix[i,1],columnIndexesInLabMatrix[indexMatrix[i,2]]+2]
+for(i in 1:nrow(LumenIndexVisLvlOne)){
+  LabVisLevelOne[i,1]<-LabWithoutFirstColumns[LumenIndexVisLvlOne[i,1],columnIndexesInLabMatrix[LumenIndexVisLvlOne[i,2]]]
+  LabVisLevelOne[i,2]<-LabWithoutFirstColumns[LumenIndexVisLvlOne[i,1],columnIndexesInLabMatrix[LumenIndexVisLvlOne[i,2]]+1]
+  LabVisLevelOne[i,3]<-LabWithoutFirstColumns[LumenIndexVisLvlOne[i,1],columnIndexesInLabMatrix[LumenIndexVisLvlOne[i,2]]+2]
+}
+
+for(i in 1:nrow(LumenIndexVisLvlTwo)){
+  LabVisLevelTwo[i,1]<-LabWithoutFirstColumns[LumenIndexVisLvlTwo[i,1],columnIndexesInLabMatrix[LumenIndexVisLvlTwo[i,2]]]
+  LabVisLevelTwo[i,2]<-LabWithoutFirstColumns[LumenIndexVisLvlTwo[i,1],columnIndexesInLabMatrix[LumenIndexVisLvlTwo[i,2]]+1]
+  LabVisLevelTwo[i,3]<-LabWithoutFirstColumns[LumenIndexVisLvlTwo[i,1],columnIndexesInLabMatrix[LumenIndexVisLvlTwo[i,2]]+2]
+}
+
+for(i in 1:nrow(LumenIndexVisLvlThree)){
+  LabVisLevelThree[i,1]<-LabWithoutFirstColumns[LumenIndexVisLvlThree[i,1],columnIndexesInLabMatrix[LumenIndexVisLvlThree[i,2]]]
+  LabVisLevelThree[i,2]<-LabWithoutFirstColumns[LumenIndexVisLvlThree[i,1],columnIndexesInLabMatrix[LumenIndexVisLvlThree[i,2]]+1]
+  LabVisLevelThree[i,3]<-LabWithoutFirstColumns[LumenIndexVisLvlThree[i,1],columnIndexesInLabMatrix[LumenIndexVisLvlThree[i,2]]+2]
+}
+
+for(i in 1:nrow(LumenIndexVisLvlFour)){
+  LabVisLevelFour[i,1]<-LabWithoutFirstColumns[LumenIndexVisLvlFour[i,1],columnIndexesInLabMatrix[LumenIndexVisLvlFour[i,2]]]
+  LabVisLevelFour[i,2]<-LabWithoutFirstColumns[LumenIndexVisLvlFour[i,1],columnIndexesInLabMatrix[LumenIndexVisLvlFour[i,2]]+1]
+  LabVisLevelFour[i,3]<-LabWithoutFirstColumns[LumenIndexVisLvlFour[i,1],columnIndexesInLabMatrix[LumenIndexVisLvlFour[i,2]]+2]
 }
 
 #convert lab matrx to rgb matrix
-RgbForLevel <- matrix(NA, nrow = nrow(LabForLevel), ncol = 3, byrow = FALSE)
-for(i in 1:nrow(LabForLevel)){
-  RgbForLevel[i,1:3]<-convertColor(LabForLevel[i,1:3],from = "Lab", to="sRGB")
+RgbForVisLevelOne <- matrix(NA, nrow = nrow(LabVisLevelOne), ncol = 3, byrow = FALSE)
+for(i in 1:nrow(LabVisLevelOne)){
+  RgbForVisLevelOne[i,1:3]<-convertColor(LabVisLevelOne[i,1:3],from = "Lab", to="sRGB")
 }
 
+RgbForVisLevelTwo <- matrix(NA, nrow = nrow(LabVisLevelTwo), ncol = 3, byrow = FALSE)
+for(i in 1:nrow(LabVisLevelTwo)){
+  RgbForVisLevelTwo[i,1:3]<-convertColor(LabVisLevelTwo[i,1:3],from = "Lab", to="sRGB")
+}
+
+RgbForVisLevelThree <- matrix(NA, nrow = nrow(LabVisLevelThree), ncol = 3, byrow = FALSE)
+for(i in 1:nrow(LabVisLevelThree)){
+  RgbForVisLevelThree[i,1:3]<-convertColor(LabVisLevelThree[i,1:3],from = "Lab", to="sRGB")
+}
+
+RgbForVisLevelFour <- matrix(NA, nrow = nrow(LabVisLevelFour), ncol = 3, byrow = FALSE)
+for(i in 1:nrow(LabVisLevelFour)){
+  RgbForVisLevelFour[i,1:3]<-convertColor(LabVisLevelFour[i,1:3],from = "Lab", to="sRGB")
+}
+
+par(mfrow=c(2,2))
 library(scatterplot3d)
-scatterplot3d(RgbForLevel, color = rgb(RgbForLevel, alpha=1),xlab = "red", ylab = "green",zlab = "blue", main="Level 1")
+scatterplot3d(RgbForVisLevelOne, color = rgb(RgbForVisLevelOne, alpha=1),xlab = "red", ylab = "green",zlab = "blue", main="Level 1")
+scatterplot3d(RgbForVisLevelTwo, color = rgb(RgbForVisLevelTwo, alpha=1),xlab = "red", ylab = "green",zlab = "blue", main="Level 2")
+scatterplot3d(RgbForVisLevelThree, color = rgb(RgbForVisLevelThree, alpha=1),xlab = "red", ylab = "green",zlab = "blue", main="Level 3")
+scatterplot3d(RgbForVisLevelFour, color = rgb(RgbForVisLevelFour, alpha=1),xlab = "red", ylab = "green",zlab = "blue", main="Level 4")
 
 
