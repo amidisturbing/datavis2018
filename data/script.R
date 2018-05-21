@@ -25,20 +25,25 @@ for (i in 1:ncol(SpotErrorMatrix)) {
   SpotErrorMatrix[,i] <- sqrt(rowSums(DeltaMasterSquared[,(i-1)*3+(1:3)]))
 }
 #compute min's and max's
-deltaERangePerCard  <- matrix(NA, nrow = nrow(SpotErrorMatrix), ncol = 2, byrow = FALSE)
+deltaERangePerCard  <- matrix(NA, nrow = nrow(SpotErrorMatrix), ncol = 4, byrow = FALSE)
 rownames(deltaERangePerCard) <- c(1:nrow(SpotErrorMatrix))
-colnames(deltaERangePerCard) <- c("Minimum","Maximum")
+colnames(deltaERangePerCard) <- c("Minimum","MinIndex","Maximum","MaxIndex")
 #deltaERangePerCard <- as.table(deltaERangePerCard)
 #deltaERangePerCard["Minimum"] 
 
 for (i in 1:nrow(SpotErrorMatrix)) {
-  rafMin <- min(SpotErrorMatrix[i,])
-  rafMax <- max(SpotErrorMatrix[i,])
-  minIndex <- match(c(rafMin),SpotErrorMatrix[i,])
-  maxIndex <- match(c(rafMax),SpotErrorMatrix[i,])
-  #print(c(i, rafMin, minIndex, rafMax, maxIndex))
-  deltaERangePerCard[i,"Minimum"] <- min(SpotErrorMatrix[i,])
+  deltaMinPerCard <- min(SpotErrorMatrix[i,])
+  deltaMaxPerCard <- max(SpotErrorMatrix[i,])
+  minIndex <- match(c(deltaMinPerCard),SpotErrorMatrix[i,])
+  maxIndex <- match(c(deltaMaxPerCard),SpotErrorMatrix[i,])
+  #print(c(i, deltaMinPerCard, minIndex, deltaMaxPerCard, maxIndex))
+  deltaERangePerCard[i,"Minimum","MinIndex","Maximum","MaxIndex"] <- c(deltaMinPerCard,minIndex,deltaMaxPerCard,maxIndex)
+  #deltaERangePerCard[i,"Minimum",,,] <- min(SpotErrorMatrix[i,])
+  #deltaERangePerCard[i,,"MinIndex",,] <- minIndex
   deltaERangePerCard[i,"Maximum"] <- max(SpotErrorMatrix[i,])
+  #deltaERangePerCard[i,"Maximum",,,] <- max(SpotErrorMatrix[i,])
+  deltaMinPerCard
+  
 }
 
 #count how many spots belong into each visibility group
@@ -112,7 +117,7 @@ for(i in 1:nrow(LumenIndexVisLvlFour)){
   LabVisLevelFour[i,3]<-LabWithoutFirstColumns[LumenIndexVisLvlFour[i,1],columnIndexesInLabMatrix[LumenIndexVisLvlFour[i,2]]+2]
 }
 
-#convert lab matrx to rgb matrix
+#convert lab matrix to rgb matrix
 RgbForVisLevelOne <- matrix(NA, nrow = nrow(LabVisLevelOne), ncol = 3, byrow = FALSE)
 for(i in 1:nrow(LabVisLevelOne)){
   RgbForVisLevelOne[i,1:3]<-convertColor(LabVisLevelOne[i,1:3],from = "Lab", to="sRGB")
