@@ -39,6 +39,8 @@ for (i in 1:nrow(SpotErrorMatrix)) {
   deltaERangePerCard[i,"Maximum"] <- max(SpotErrorMatrix[i,])
   deltaERangePerCard[i,"MaxIndex"]<-maxIndex
 }
+match(c(min(apply(deltaERangePerCard,2,min))),deltaERangePerCard)
+
 #deltaERangePerCard <- as.table(deltaERangePerCard)
 #deltaERangePerCard["Minimum"] 
 
