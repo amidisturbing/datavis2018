@@ -12,11 +12,19 @@ MasterSameSizeAsLab <- matrix(rep(MasterAsOneRow, 13*42), byrow = TRUE,nrow = 13
 #cuts off row and col column from lab data
 LabWithoutFirstColumns <- lab[,-c(1:2)]
 
+#helper array to get back to lab values after errormatrix was build
+columnIndexesInLabMatrix<-seq(from=1, to=192,by=3)
+
 #create a matrx that contains the differences between the Lab values of master and lab
 DeltaMasterLab <- MasterSameSizeAsLab - LabWithoutFirstColumns
 
 #square the differences
 DeltaMasterSquared <- DeltaMasterLab^2
+
+getIndexInLab <- function(IndexFromErrorMatrix){
+  return (((IndexFromErrorMatrix-1)*3)+1)
+}
+
 
 #SpotErrorMatrix contains Lab Errors for each spot (one row is one colour card)
 SpotErrorMatrix <- matrix(NA, nrow = 546, ncol = 64, byrow = FALSE)
@@ -40,6 +48,7 @@ for (i in 1:nrow(SpotErrorMatrix)) {
   deltaERangePerCard[i,"MaxIndex"]<-maxIndex
 }
 
+<<<<<<< HEAD
 #for (i in 1:nrow(deltaERangePerCard)) {
 #  hist(deltaERangePerCard,  breaks="Sturge", col="grey", labels = T,main="colour card errors")
 #}
@@ -48,6 +57,20 @@ for (i in 1:nrow(SpotErrorMatrix)) {
 
 deltaERangePerCardAsTable <- as.table(deltaERangePerCard)
 deltaERangePerCardAsTable 
+=======
+
+# this part is to get the worst and best color spot compared to the master
+library(matrixStats)
+maxCol<- deltaERangePerCard[match(colMaxs(deltaERangePerCard),deltaERangePerCard[,3])[3],4]
+maxRow<- match(colMaxs(deltaERangePerCard),deltaERangePerCard[,3])[3]
+minRow<- match(colMins(deltaERangePerCard),deltaERangePerCard)[1]
+minCol<- deltaERangePerCard[match(colMins(deltaERangePerCard),deltaERangePerCard)[1],2]
+
+worstColor <- c(LabWithoutFirstColumns[maxRow,columnIndexesInLabMatrix[maxCol]],LabWithoutFirstColumns[maxRow,columnIndexesInLabMatrix[maxCol]+1],LabWithoutFirstColumns[maxRow,columnIndexesInLabMatrix[maxCol]+2])
+bestColor <- c(LabWithoutFirstColumns[minRow,columnIndexesInLabMatrix[minCol]],LabWithoutFirstColumns[minRow,columnIndexesInLabMatrix[minCol]+1],LabWithoutFirstColumns[minRow,columnIndexesInLabMatrix[minCol]+2])
+worstColorMaster<- c(MasterAsOneRow[columnIndexesInLabMatrix[maxCol]],MasterAsOneRow[columnIndexesInLabMatrix[maxCol]+1],MasterAsOneRow[columnIndexesInLabMatrix[maxCol]+2])
+bestColorMaster<- c(MasterAsOneRow[columnIndexesInLabMatrix[minCol]],MasterAsOneRow[columnIndexesInLabMatrix[minCol]+1],MasterAsOneRow[columnIndexesInLabMatrix[minCol]+2])
+>>>>>>> 62476679eb08e2e6453231b23fcfbbea2ad7b794
 
 #count how many spots belong into each visibility group
 VisLevelOne <- sum(SpotErrorMatrix<=1)
