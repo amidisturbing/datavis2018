@@ -48,16 +48,7 @@ for (i in 1:nrow(SpotErrorMatrix)) {
   deltaERangePerCard[i,"MaxIndex"]<-maxIndex
 }
 
-<<<<<<< HEAD
-#for (i in 1:nrow(deltaERangePerCard)) {
-#  hist(deltaERangePerCard,  breaks="Sturge", col="grey", labels = T,main="colour card errors")
-#}
-
-#match(c(max(apply(deltaERangePerCard,2,max))),deltaERangePerCard[3,])
-
 deltaERangePerCardAsTable <- as.table(deltaERangePerCard)
-deltaERangePerCardAsTable 
-=======
 
 # this part is to get the worst and best color spot compared to the master
 library(matrixStats)
@@ -70,7 +61,7 @@ worstColor <- c(LabWithoutFirstColumns[maxRow,columnIndexesInLabMatrix[maxCol]],
 bestColor <- c(LabWithoutFirstColumns[minRow,columnIndexesInLabMatrix[minCol]],LabWithoutFirstColumns[minRow,columnIndexesInLabMatrix[minCol]+1],LabWithoutFirstColumns[minRow,columnIndexesInLabMatrix[minCol]+2])
 worstColorMaster<- c(MasterAsOneRow[columnIndexesInLabMatrix[maxCol]],MasterAsOneRow[columnIndexesInLabMatrix[maxCol]+1],MasterAsOneRow[columnIndexesInLabMatrix[maxCol]+2])
 bestColorMaster<- c(MasterAsOneRow[columnIndexesInLabMatrix[minCol]],MasterAsOneRow[columnIndexesInLabMatrix[minCol]+1],MasterAsOneRow[columnIndexesInLabMatrix[minCol]+2])
->>>>>>> 62476679eb08e2e6453231b23fcfbbea2ad7b794
+
 
 bestColorRGB <- convertColor(bestColor,from = "Lab", to="sRGB")
 worstColorRGB <-convertColor(worstColorRGB,from = "Lab", to="sRGB")
