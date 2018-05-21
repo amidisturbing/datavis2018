@@ -28,23 +28,19 @@ for (i in 1:ncol(SpotErrorMatrix)) {
 deltaERangePerCard  <- matrix(NA, nrow = nrow(SpotErrorMatrix), ncol = 4, byrow = FALSE)
 rownames(deltaERangePerCard) <- c(1:nrow(SpotErrorMatrix))
 colnames(deltaERangePerCard) <- c("Minimum","MinIndex","Maximum","MaxIndex")
-#deltaERangePerCard <- as.table(deltaERangePerCard)
-#deltaERangePerCard["Minimum"] 
 
 for (i in 1:nrow(SpotErrorMatrix)) {
   deltaMinPerCard <- min(SpotErrorMatrix[i,])
   deltaMaxPerCard <- max(SpotErrorMatrix[i,])
   minIndex <- match(c(deltaMinPerCard),SpotErrorMatrix[i,])
   maxIndex <- match(c(deltaMaxPerCard),SpotErrorMatrix[i,])
-  #print(c(i, deltaMinPerCard, minIndex, deltaMaxPerCard, maxIndex))
-  deltaERangePerCard[i,"Minimum","MinIndex","Maximum","MaxIndex"] <- c(deltaMinPerCard,minIndex,deltaMaxPerCard,maxIndex)
-  #deltaERangePerCard[i,"Minimum",,,] <- min(SpotErrorMatrix[i,])
-  #deltaERangePerCard[i,,"MinIndex",,] <- minIndex
+  deltaERangePerCard[i,"Minimum"] <- deltaMinPerCard
+  deltaERangePerCard[i,"MinIndex"]<-minIndex
   deltaERangePerCard[i,"Maximum"] <- max(SpotErrorMatrix[i,])
-  #deltaERangePerCard[i,"Maximum",,,] <- max(SpotErrorMatrix[i,])
-  deltaMinPerCard
-  
+  deltaERangePerCard[i,"MaxIndex"]<-maxIndex
 }
+#deltaERangePerCard <- as.table(deltaERangePerCard)
+#deltaERangePerCard["Minimum"] 
 
 #count how many spots belong into each visibility group
 VisLevelOne <- sum(SpotErrorMatrix<=1)
