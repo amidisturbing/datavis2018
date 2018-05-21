@@ -48,6 +48,16 @@ for (i in 1:nrow(SpotErrorMatrix)) {
   deltaERangePerCard[i,"MaxIndex"]<-maxIndex
 }
 
+<<<<<<< HEAD
+#for (i in 1:nrow(deltaERangePerCard)) {
+#  hist(deltaERangePerCard,  breaks="Sturge", col="grey", labels = T,main="colour card errors")
+#}
+
+#match(c(max(apply(deltaERangePerCard,2,max))),deltaERangePerCard[3,])
+
+deltaERangePerCardAsTable <- as.table(deltaERangePerCard)
+deltaERangePerCardAsTable 
+=======
 
 # this part is to get the worst and best color spot compared to the master
 library(matrixStats)
@@ -60,6 +70,7 @@ worstColor <- c(LabWithoutFirstColumns[maxRow,columnIndexesInLabMatrix[maxCol]],
 bestColor <- c(LabWithoutFirstColumns[minRow,columnIndexesInLabMatrix[minCol]],LabWithoutFirstColumns[minRow,columnIndexesInLabMatrix[minCol]+1],LabWithoutFirstColumns[minRow,columnIndexesInLabMatrix[minCol]+2])
 worstColorMaster<- c(MasterAsOneRow[columnIndexesInLabMatrix[maxCol]],MasterAsOneRow[columnIndexesInLabMatrix[maxCol]+1],MasterAsOneRow[columnIndexesInLabMatrix[maxCol]+2])
 bestColorMaster<- c(MasterAsOneRow[columnIndexesInLabMatrix[minCol]],MasterAsOneRow[columnIndexesInLabMatrix[minCol]+1],MasterAsOneRow[columnIndexesInLabMatrix[minCol]+2])
+>>>>>>> 62476679eb08e2e6453231b23fcfbbea2ad7b794
 
 bestColorRGB <- convertColor(bestColor,from = "Lab", to="sRGB")
 worstColorRGB <-convertColor(worstColorRGB,from = "Lab", to="sRGB")
@@ -96,7 +107,8 @@ for (i in 1:13) {
   }
   meanErrorPerSample[i]<- meanErrorPerSample[i]/42
 }
-
+#plot meanErrorPerSample
+hist(meanErrorPerSample, breaks="Sturge", col="grey", labels = T,main="mean ΔE values per Sample")
 
 #try to get back from error to lab values in table
 #get indexes of errors in certain level
@@ -164,5 +176,4 @@ scatterplot3d(RgbForVisLevelOne, color = rgb(RgbForVisLevelOne, alpha=1),xlab = 
 scatterplot3d(RgbForVisLevelTwo, color = rgb(RgbForVisLevelTwo, alpha=1),xlab = "red", ylab = "green",zlab = "blue", main="Level 2")
 scatterplot3d(RgbForVisLevelThree, color = rgb(RgbForVisLevelThree, alpha=1),xlab = "red", ylab = "green",zlab = "blue", main="Level 3")
 scatterplot3d(RgbForVisLevelFour, color = rgb(RgbForVisLevelFour, alpha=1),xlab = "red", ylab = "green",zlab = "blue", main="Level 4")
-
 

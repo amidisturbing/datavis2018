@@ -29,17 +29,58 @@ summary(cars)
 ```
 The `echo = TRUE` parameter was added to the code chunk for printing the R code that has generated the plot.
 
+## Defining and interpreting Delta E
+ΔE - (Delta E, dE) is the eucledian distance between two color spots.
+It is a metric that encodes a numeric understanding how the human eye perceives color difference.
+The word Delta defines a difference between two spots while E comes from the German Word *"Empfindung"*.
+
+In this Analysis the E76 vaue was calculated which got his name from the year it was founded, which was 1976. 
+
+The formular is
+
+∆E76 = sqrt((∆L)^2 + (∆a)^2 + (∆b)^2)
+
+where:
+ 
+(∆L)2 + (∆a)2 + (∆b)2
+∆L = L1 − L2 - difference of luminance,
+∆a = a1 − a2 - difference of values for coordinate a, ∆b = b1 − b2 - difference of values for coordinate b.
+
+```{r}
+perceptionTable <- matrix(NA, nrow = 5, ncol = 2, byrow = FALSE)
+colnames(perceptionTable) <- c("ΔE value","Perception")
+deltaE <- c("<= 1.0","1 - 2", "3 - 10", "11 - 49", "100")
+perception <- c("Not perceptible by human eyes.", "Perceptible through close observation.
+", "Perceptible at a glance.
+", "Colors are more similar than opposite
+", "Colors are exact opposite
+")
+for (i in 1:5) {
+  perceptionTable[i,"ΔE value"] <- deltaE[i]
+  perceptionTable[i,"Perception"] <- perception[i]
+}
+kable(perceptionTable, caption = "On a typical scale, the Delta E value will range from 0 to 100.")
+```
+
+#Analysis
+##ΔE values
+##How do colors behave relative to the print master?
+It can be seen that the colors have the same relation to the print master. While it is evidently, that there is always one color withthe smallest delta E regarding the print master, the biggest error almost always appears at the same color spor, too.
+##Is the behavior differential between targets?
+One target is a sigle color card on one sample sheet. One sample can be seen as a big sheet containing 42 color cards. The behavior inbetween the targets is very similar, which is also shown in the relation to the print master discussed in the previouse section.
+The mean ΔE value per target does not show a big range. It ranges from 3.6 to 4.2, which still is at glance.
+##Is the behavior differential between color spots?
+##Is quality possibly related to the intended color?
+Since the minimal ΔE values, as well as the maximum ΔE values always appear on the same color spot, the Error seems to be very much related to the intended color. 
+
+```{r fig.cap="The comparisson between the intended color taken from the Master Color Card and the color spot with the highest Error is shown below."}
+plot(pressure)
+```
+
 ## Including Plots
 
 Embed plot with a caption for Figure 1.
 
 ```{r fig.cap="This is a capture for Figure 1."}
 plot(pressure)
-```
-
-## Tables
-nice looking table
-```{r}
-myTable <- xtabs(pressure, data = pressure)
-kable(myTable, caption = "Table caption.")
 ```
