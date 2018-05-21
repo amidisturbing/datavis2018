@@ -1,8 +1,8 @@
 ---
 title: "Data Visualization Task 1"
 author: 
-- name: Alexander Jänisch, Parvin, Rafaela Neff
-  affiliation: Beuth University of Applied Sience Berlin
+- name: Alexander Jaenisch, Parvin, Rafaela Neff
+  affiliation: Beuth University of Applied Science Berlin
 date: "Summer Term 2018"
 output: 
   html_document: 
@@ -77,8 +77,11 @@ plot(pressure)
 ##Is the behavior differential between targets?
 One target is a sigle color card on one sample sheet. One sample can be seen as a big sheet containing 42 color cards. The behavior inbetween the targets is very similar, which is also shown in the relation to the print master discussed in the previouse section.
 The mean ΔE value per target does not show a big range. It ranges from 3.6 to 4.2, which still is at glance.
+
 ##Is the behavior differential between color spots?
+
 ##Is quality possibly related to the intended color?
+
 Since the minimal ΔE values, as well as the maximum ΔE values always appear on the same color spot, the Error seems to be very much related to the intended color. 
 
 ```{r fig.cap="The comparisson between the intended color taken from the Master Color Card and the color spot with the highest Error is shown below."}
