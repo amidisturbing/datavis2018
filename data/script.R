@@ -61,6 +61,11 @@ bestColor <- c(LabWithoutFirstColumns[minRow,columnIndexesInLabMatrix[minCol]],L
 worstColorMaster<- c(MasterAsOneRow[columnIndexesInLabMatrix[maxCol]],MasterAsOneRow[columnIndexesInLabMatrix[maxCol]+1],MasterAsOneRow[columnIndexesInLabMatrix[maxCol]+2])
 bestColorMaster<- c(MasterAsOneRow[columnIndexesInLabMatrix[minCol]],MasterAsOneRow[columnIndexesInLabMatrix[minCol]+1],MasterAsOneRow[columnIndexesInLabMatrix[minCol]+2])
 
+bestColorRGB <- convertColor(bestColor,from = "Lab", to="sRGB")
+worstColorRGB <-convertColor(worstColorRGB,from = "Lab", to="sRGB")
+worstColorMasterRGB<-convertColor(worstColorMaster,from = "Lab", to="sRGB")
+bestColorMasterRGB<-convertColor(bestColorMaster,from = "Lab", to="sRGB")
+
 #count how many spots belong into each visibility group
 VisLevelOne <- sum(SpotErrorMatrix<=1)
 VisLevelTwo <- sum((SpotErrorMatrix>1) & (SpotErrorMatrix<2))
