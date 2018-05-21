@@ -41,10 +41,12 @@ The formular is
 ∆E76 = sqrt((∆L)^2 + (∆a)^2 + (∆b)^2)
 
 where:
- 
-(∆L)2 + (∆a)2 + (∆b)2
-∆L = L1 − L2 - difference of luminance,
+
+∆L = L1 − L2 - difference of luminance.
+
 ∆a = a1 − a2 - difference of values for coordinate a, ∆b = b1 − b2 - difference of values for coordinate b.
+
+∆b = b1 − b2 - difference of values for coordinate b.
 
 ```{r}
 perceptionTable <- matrix(NA, nrow = 5, ncol = 2, byrow = FALSE)
@@ -63,9 +65,15 @@ kable(perceptionTable, caption = "On a typical scale, the Delta E value will ran
 ```
 
 #Analysis
-##ΔE values
 ##How do colors behave relative to the print master?
-It can be seen that the colors have the same relation to the print master. While it is evidently, that there is always one color withthe smallest delta E regarding the print master, the biggest error almost always appears at the same color spor, too.
+It can be seen that the colors have the same relation to the print master. While it is evidently, that there is always one color with the smallest ΔE value regarding the print master, the biggest error almost always appears at the same color spot, too.
+
+The mean Error relative to the print master is comparatively low, as the followng density plot is showing.
+
+```{r fig.cap="The density of ΔE value shows the highest error between 3.5 and 4. It is compared to the master data and perceptible at glance."}
+plot(pressure)
+```
+
 ##Is the behavior differential between targets?
 One target is a sigle color card on one sample sheet. One sample can be seen as a big sheet containing 42 color cards. The behavior inbetween the targets is very similar, which is also shown in the relation to the print master discussed in the previouse section.
 The mean ΔE value per target does not show a big range. It ranges from 3.6 to 4.2, which still is at glance.
