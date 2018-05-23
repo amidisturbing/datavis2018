@@ -33,7 +33,7 @@ SpotErrorMatrix <- matrix(NA, nrow = 546, ncol = 64, byrow = FALSE)
 for (i in 1:ncol(SpotErrorMatrix)) {
   SpotErrorMatrix[,i] <- sqrt(rowSums(DeltaMasterSquared[,(i-1)*3+(1:3)]))
 }
-#compute min's and max's
+#find min's and max's
 deltaERangePerCard  <- matrix(NA, nrow = nrow(SpotErrorMatrix), ncol = 4, byrow = FALSE)
 rownames(deltaERangePerCard) <- c(1:nrow(SpotErrorMatrix))
 colnames(deltaERangePerCard) <- c("Minimum","MinIndex","Maximum","MaxIndex")
