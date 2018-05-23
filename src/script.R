@@ -71,12 +71,16 @@ worstColorMasterRGB <-convertColor(worstColorMaster,from = "Lab", to="sRGB")
 bestColorMasterRGB <-convertColor(bestColorMaster,from = "Lab", to="sRGB")
 
 #par(mfrow=c(1,2), mar=c(0,0))
-plot(0,0, xlim=c(-1,1), ylim=c(-1,1), axes=FALSE, xlab="",ylab="")
+plot(0,0, xlim=c(-1,1), ylim=c(-1,1), axes=FALSE, xlab="",ylab="", main = "color with min Δ")
 rect(-1,-1,1,0, col=rgb(bestColorMasterRGB, alpha=1))
 rect(-1,0,1,1, col=rgb(bestColorRGB, alpha=1))
-plot(0,0, xlim=c(-1,1), ylim=c(-1,1), axes=FALSE, xlab="",ylab="")
+text(0, -0.5, labels = "Master")
+text(0, 0.5, labels = "Lab")
+plot(0,0, xlim=c(-1,1), ylim=c(-1,1), axes=FALSE, xlab="",ylab="", main = "color with max Δ")
 rect(-1,-1,1,0, col=rgb(worstColorMasterRGB, alpha=1))
 rect(-1,0,1,1, col=rgb(worstColorRGB, alpha=1))
+text(0, -0.5, labels = "Master")
+text(0, 0.5, labels = "Lab")
 
 #count how many spots belong into each visibility group
 VisLevelOne <- sum(SpotErrorMatrix<=1)
