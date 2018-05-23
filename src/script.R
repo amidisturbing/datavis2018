@@ -64,7 +64,7 @@ worstColorMaster<- c(MasterAsOneRow[columnIndexesInLabMatrix[maxCol]],MasterAsOn
 bestColorMaster<- c(MasterAsOneRow[columnIndexesInLabMatrix[minCol]],MasterAsOneRow[columnIndexesInLabMatrix[minCol]+1],MasterAsOneRow[columnIndexesInLabMatrix[minCol]+2])
 
 
-plot(c(1,2,3))
+## @knitr part1
 bestColorRGB <- convertColor(bestColor,from = "Lab", to="sRGB")
 worstColorRGB <-convertColor(worstColor,from = "Lab", to="sRGB")
 worstColorMasterRGB <-convertColor(worstColorMaster,from = "Lab", to="sRGB")
