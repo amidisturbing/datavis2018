@@ -153,10 +153,10 @@ for(i in 1:nrow(LabVisLevelFour)){
 
 #PLOTS
 #plot the groups
-## @knitr barplotVisLevelOne
+## @knitr barplotVisLevel
 barplot(c(VisLevelOne,VisLevelTwo,VisLevelThree,VisLevelFour,VisLevelFive),
         (1:5),
-        names.arg = c("Not Perceptable","Hardly Perceptable","At Glance","very Perceptible","Opposite"))
+        names.arg = c("1","2","3","4","5"))
 #plot the groups
 ## @knitr histMeanErrorPerTarget
 hist(meanErrorPerTarget, breaks="Sturge", col="grey", labels = T,main="Colour Card Errors")
@@ -180,11 +180,11 @@ text(0, -0.5, labels = "Master")
 text(0, 0.5, labels = "Lab")
 #3d Plot
 #par(mfrow=c(2,2))
-## @knitr 3dRgbForVisLevelOne
+## @knitr rgbForVisLevelOne
 scatterplot3d(RgbForVisLevelOne, color = rgb(RgbForVisLevelOne, alpha=1),xlab = "red", ylab = "green",zlab = "blue", main="Level 1")
-## @knitr 3dRgbForVisLevelTwo
+## @knitr rgbForVisLevelTwo
 scatterplot3d(RgbForVisLevelTwo, color = rgb(RgbForVisLevelTwo, alpha=1),xlab = "red", ylab = "green",zlab = "blue", main="Level 2")
-## @knitr 3dRgbForVisLevelThree
+## @knitr rgbForVisLevelThree
 scatterplot3d(RgbForVisLevelThree, color = rgb(RgbForVisLevelThree, alpha=1),xlab = "red", ylab = "green",zlab = "blue", main="Level 3")
-## @knitr 3dRgbForVisLevelFour
+## @knitr rgbForVisLevelFour
 scatterplot3d(RgbForVisLevelFour, color = rgb(RgbForVisLevelFour, alpha=1),xlab = "red", ylab = "green",zlab = "blue", main="Level 4")

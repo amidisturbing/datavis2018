@@ -63,8 +63,13 @@ kable(perceptionTable, caption = "On a typical scale, the Delta E value will ran
 # Analysis
 
 ## How do colors behave relative to the print master?
+
 It can be seen that the colors have the same relation to the print master. While it is evidently, that there is always one color with the smallest ΔE value regarding the print master, the biggest error almost always appears at the same color spot, too.
 
+The distribution of the 
+
+```{r fig.cap="Distribution of the ∆E values in the 5 visibility levels.", barplotVisLevel}
+```
 The mean Error relative to the print master is comparatively low, as the followng density plot is showing.
 
 ```{r fig.cap="The density of ΔE value shows the highest error between 3.5 and 4. It is compared to the master data and perceptible at glance.", densityMeanError}
@@ -81,9 +86,21 @@ The histogram shows the distribution of the targets regarding their  ΔE value t
 ```
 ## Is the behavior differential between color spots?
 
+```{r fig.cap="The comparisson between the intended color taken from the Master Color Card and the color spot with the highest Error is shown below.", compareWorseBestDelta}
+```
 ## Is quality possibly related to the intended color?
 
 Since the minimal ΔE values, as well as the maximum ΔE values always appear on the same color spot, the Error seems to be very much related to the intended color. 
 
-```{r fig.cap="The comparisson between the intended color taken from the Master Color Card and the color spot with the highest Error is shown below.", compareWorseBestDelta}
+## More Plots 
+```{r fig.cap="l1", rgbForVisLevelOne}
+```
+
+```{r fig.cap="", rgbForVisLevelTwo}
+```
+
+```{r fig.cap="", rgbForVisLevelThree}
+```
+
+```{r fig.cap="", rgbForVisLevelFour}
 ```
