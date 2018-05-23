@@ -1,7 +1,7 @@
 ---
 title: "Data Visualization Task 1"
 author: 
-- name: Alexander Jaenisch, Parvin, Rafaela Neff
+- name: Alexander Jaenisch, Rafaela Neff, Parvin Shakibaei
   affiliation: Beuth University of Applied Science Berlin
 date: "Summer Term 2018"
 output: 
