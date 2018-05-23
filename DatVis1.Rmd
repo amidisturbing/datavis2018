@@ -82,8 +82,17 @@ The mean ΔE value per target does not show a big range. In the density plot fro
 
 The histogram shows the distribution of the targets regarding their  ΔE value to the Master Color Card.
 
-```{r fig.cap="The mean ΔE value per target shows that the most target sheets show an error that is only perceptible at glance.", histMeanError}
+```{r fig.cap="The mean ΔE value per target shows that the most target sheets show an error that is only perceptible at glance.", histMeanErrorPerTarget}
 ```
+
+## Is the behavior differential between samples?
+
+The mean error of one sample relativ to the print master falls almost in the same range as the mean Error per target, but is 0.3 higher at its smallest value. This is not perceptible for the human eye.
+
+```{r fig.cap="The most samples show a ΔE value between 3.8 and 3.9 compared to the master.", histMeanErrorPerSample}
+```
+
+
 ## Is the behavior differential between color spots?
 
 ```{r fig.cap="The comparisson between the intended color taken from the Master Color Card and the color spot with the highest Error is shown below.", compareWorseBestDelta}
