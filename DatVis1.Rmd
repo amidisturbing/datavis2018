@@ -23,7 +23,7 @@ read_chunk('src/script.R')
 # Introduction
 
 Include ***code results***
-```{r part1}
+```{r part2}
 ```
 
 ```{r cars, echo=TRUE}
