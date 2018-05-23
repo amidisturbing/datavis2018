@@ -24,9 +24,19 @@ read_chunk('src/script.R')
 ```
 # Introduction
 
+## Lab solor space
+
+Colors are mathematically described with three components in the Lab* color space:
+
+- **L**: luminance
+- **a**: color from green to magenta 
+- **b**: color from blue to yellow
+
+The difference between two colors can be descriped by the Δ E formular.
+
 ## Defining and interpreting Δ E
 
-ΔE - (Delta E, dE) is the eucledian distance between two color spots.
+ΔE - (Delta E, dE) is the euclidean distance between their colorimetric coordinates.
 It is a metric that encodes a numeric understanding how the human eye perceives color difference.
 The word Delta defines a difference between two spots while E comes from the German Word *"Empfindung"*.
 
