@@ -24,7 +24,11 @@ read_chunk('src/script.R')
 ```
 # Introduction
 
-## Lab solor space
+In this excersise we examin color measurements of prints of Douglas color cards. The intended colors for color card production were compared to thirteen large sheets, sampled from production. Each sample sheet contains 42 color cards.
+
+The colors are represented in Lab color space.
+
+## Lab color space
 
 Colors are mathematically described with three components in the Lab* color space:
 
@@ -32,7 +36,7 @@ Colors are mathematically described with three components in the Lab* color spac
 - **a**: color from green to magenta 
 - **b**: color from blue to yellow
 
-The difference between two colors can be descriped by the Δ E formular.
+The difference between two colors can be descriped by the Δ E formular, which will be covered in the following section.
 
 ## Defining and interpreting Δ E
 
