@@ -1,5 +1,6 @@
 #load the data
-setwd("datavis2018")
+## @knitr part1
+#setwd("datavis2018")
 lab <- read.csv2("data/LabMeasurements-Color-Card.csv")
 Master <- read.csv2("data/MasterColorCard.csv")
 
@@ -63,12 +64,13 @@ worstColorMaster<- c(MasterAsOneRow[columnIndexesInLabMatrix[maxCol]],MasterAsOn
 bestColorMaster<- c(MasterAsOneRow[columnIndexesInLabMatrix[minCol]],MasterAsOneRow[columnIndexesInLabMatrix[minCol]+1],MasterAsOneRow[columnIndexesInLabMatrix[minCol]+2])
 
 
+plot(c(1,2,3))
 bestColorRGB <- convertColor(bestColor,from = "Lab", to="sRGB")
 worstColorRGB <-convertColor(worstColor,from = "Lab", to="sRGB")
 worstColorMasterRGB <-convertColor(worstColorMaster,from = "Lab", to="sRGB")
 bestColorMasterRGB <-convertColor(bestColorMaster,from = "Lab", to="sRGB")
 
-par(mfrow=c(1,2), mar=c(0,0))
+#par(mfrow=c(1,2), mar=c(0,0))
 plot(0,0, xlim=c(-1,1), ylim=c(-1,1), axes=FALSE, xlab="",ylab="")
 rect(-1,-1,1,0, col=rgb(bestColorMasterRGB, alpha=1))
 rect(-1,0,1,1, col=rgb(bestColorRGB, alpha=1))
