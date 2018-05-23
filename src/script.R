@@ -1,6 +1,7 @@
-#load the data
 ## @knitr part1
-#setwd("datavis2018")
+library(matrixStats)
+library(scatterplot3d)
+#load the data
 lab <- read.csv2("data/LabMeasurements-Color-Card.csv")
 Master <- read.csv2("data/MasterColorCard.csv")
 
@@ -25,7 +26,6 @@ DeltaMasterSquared <- DeltaMasterLab^2
 getIndexInLab <- function(IndexFromErrorMatrix){
   return (((IndexFromErrorMatrix-1)*3)+1)
 }
-
 
 #SpotErrorMatrix contains Lab Errors for each spot (one row is one colour card)
 SpotErrorMatrix <- matrix(NA, nrow = 546, ncol = 64, byrow = FALSE)
@@ -52,7 +52,6 @@ for (i in 1:nrow(SpotErrorMatrix)) {
 deltaERangePerCardAsTable <- as.table(deltaERangePerCard)
 
 # this part is to get the worst and best color spot compared to the master
-library(matrixStats)
 maxCol<- deltaERangePerCard[match(colMaxs(deltaERangePerCard),deltaERangePerCard[,3])[3],4]
 maxRow<- match(colMaxs(deltaERangePerCard),deltaERangePerCard[,3])[3]
 minRow<- match(colMins(deltaERangePerCard),deltaERangePerCard)[1]
@@ -69,17 +68,6 @@ worstColorRGB <-convertColor(worstColor,from = "Lab", to="sRGB")
 worstColorMasterRGB <-convertColor(worstColorMaster,from = "Lab", to="sRGB")
 bestColorMasterRGB <-convertColor(bestColorMaster,from = "Lab", to="sRGB")
 
-#par(mfrow=c(1,2), mar=c(0,0))
-plot(0,0, xlim=c(-1,1), ylim=c(-1,1), axes=FALSE, xlab="",ylab="", main = "color with min Δ")
-rect(-1,-1,1,0, col=rgb(bestColorMasterRGB, alpha=1))
-rect(-1,0,1,1, col=rgb(bestColorRGB, alpha=1))
-text(0, -0.5, labels = "Master")
-text(0, 0.5, labels = "Lab")
-plot(0,0, xlim=c(-1,1), ylim=c(-1,1), axes=FALSE, xlab="",ylab="", main = "color with max Δ")
-rect(-1,-1,1,0, col=rgb(worstColorMasterRGB, alpha=1))
-rect(-1,0,1,1, col=rgb(worstColorRGB, alpha=1))
-text(0, -0.5, labels = "Master")
-text(0, 0.5, labels = "Lab")
 
 #count how many spots belong into each visibility group
 VisLevelOne <- sum(SpotErrorMatrix<=1)
@@ -88,17 +76,8 @@ VisLevelThree <- sum((SpotErrorMatrix>2) & (SpotErrorMatrix<10))
 VisLevelFour <- sum((SpotErrorMatrix>11) & (SpotErrorMatrix<49))
 VisLevelFive <- sum(SpotErrorMatrix>50)
 
-#plot the groups
-barplot(c(VisLevelOne,VisLevelTwo,VisLevelThree,VisLevelFour,VisLevelFive),
-        (1:5),
-        names.arg = c("Not Perceptable","Hardly Perceptable","At Glance","very Perceptible","Opposite"))
-
 #visibility of color changes per card
 meanErrorPerTarget <- rowMeans(SpotErrorMatrix)
-
-#plot the groups
-hist(meanErrorPerTarget, breaks="Sturge", col="grey", labels = T,main="colour card errors")
-plot(density(meanErrorPerTarget))
 
 #visibility of color changes per sample
 meanErrorPerSample <- c(1:13)
@@ -111,8 +90,6 @@ for (i in 1:13) {
   }
   meanErrorPerSample[i]<- meanErrorPerSample[i]/42
 }
-#plot meanErrorPerSample
-hist(meanErrorPerSample, breaks="Sturge", col="grey", labels = T,main="mean ΔE values per Sample")
 
 #try to get back from error to lab values in table
 #get indexes of errors in certain level
@@ -174,10 +151,40 @@ for(i in 1:nrow(LabVisLevelFour)){
   RgbForVisLevelFour[i,1:3]<-convertColor(LabVisLevelFour[i,1:3],from = "Lab", to="sRGB")
 }
 
-par(mfrow=c(2,2))
-library(scatterplot3d)
+#PLOTS
+#plot the groups
+## @knitr barplotVisLevelOne
+barplot(c(VisLevelOne,VisLevelTwo,VisLevelThree,VisLevelFour,VisLevelFive),
+        (1:5),
+        names.arg = c("Not Perceptable","Hardly Perceptable","At Glance","very Perceptible","Opposite"))
+#plot the groups
+## @knitr histMeanErrorPerTarget
+hist(meanErrorPerTarget, breaks="Sturge", col="grey", labels = T,main="Colour Card Errors")
+## @knitr densityMeanErrorPerTarget
+plot(density(meanErrorPerTarget))
+#plot meanErrorPerSample
+## @knitr histMeanErrorPerSample
+hist(meanErrorPerSample, breaks="Sturge", col="grey", labels = T,main="mean ΔE values per Sample")
+#plot the color with the biggest and the smallest distance to the intended color
+## @knitr compareWorseBestDelta
+par(mfrow=c(1,2))
+plot(0,0, xlim=c(-1,1), ylim=c(-1,1), axes=FALSE, xlab="",ylab="", main = "Color with min Δ")
+rect(-1,-1,1,0, col=rgb(bestColorMasterRGB, alpha=1))
+rect(-1,0,1,1, col=rgb(bestColorRGB, alpha=1))
+text(0, -0.5, labels = "Master")
+text(0, 0.5, labels = "Lab")
+plot(0,0, xlim=c(-1,1), ylim=c(-1,1), axes=FALSE, xlab="",ylab="", main = "color with max Δ")
+rect(-1,-1,1,0, col=rgb(worstColorMasterRGB, alpha=1))
+rect(-1,0,1,1, col=rgb(worstColorRGB, alpha=1))
+text(0, -0.5, labels = "Master")
+text(0, 0.5, labels = "Lab")
+#3d Plot
+#par(mfrow=c(2,2))
+## @knitr 3dRgbForVisLevelOne
 scatterplot3d(RgbForVisLevelOne, color = rgb(RgbForVisLevelOne, alpha=1),xlab = "red", ylab = "green",zlab = "blue", main="Level 1")
+## @knitr 3dRgbForVisLevelTwo
 scatterplot3d(RgbForVisLevelTwo, color = rgb(RgbForVisLevelTwo, alpha=1),xlab = "red", ylab = "green",zlab = "blue", main="Level 2")
+## @knitr 3dRgbForVisLevelThree
 scatterplot3d(RgbForVisLevelThree, color = rgb(RgbForVisLevelThree, alpha=1),xlab = "red", ylab = "green",zlab = "blue", main="Level 3")
+## @knitr 3dRgbForVisLevelFour
 scatterplot3d(RgbForVisLevelFour, color = rgb(RgbForVisLevelFour, alpha=1),xlab = "red", ylab = "green",zlab = "blue", main="Level 4")
-

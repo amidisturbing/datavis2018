@@ -20,18 +20,12 @@ opts_chunk$set(echo = FALSE, cache=FALSE) #(echo = TRUE) would include all code
 read_chunk('src/script.R')
 ```
 
+```{r part1}
+```
 # Introduction
 
-Include ***code results***
-```{r part2}
-```
+## Defining and interpreting Δ E
 
-```{r cars, echo=TRUE}
-summary(cars)
-```
-The `echo = TRUE` parameter was added to the code chunk for printing the R code that has generated the plot.
-
-## Defining and interpreting Delta E
 ΔE - (Delta E, dE) is the eucledian distance between two color spots.
 It is a metric that encodes a numeric understanding how the human eye perceives color difference.
 The word Delta defines a difference between two spots while E comes from the German Word *"Empfindung"*.
@@ -66,34 +60,30 @@ for (i in 1:5) {
 kable(perceptionTable, caption = "On a typical scale, the Delta E value will range from 0 to 100.")
 ```
 
-#Analysis
-##How do colors behave relative to the print master?
+# Analysis
+
+## How do colors behave relative to the print master?
 It can be seen that the colors have the same relation to the print master. While it is evidently, that there is always one color with the smallest ΔE value regarding the print master, the biggest error almost always appears at the same color spot, too.
 
 The mean Error relative to the print master is comparatively low, as the followng density plot is showing.
 
-```{r fig.cap="The density of ΔE value shows the highest error between 3.5 and 4. It is compared to the master data and perceptible at glance."}
-plot(pressure)
+```{r fig.cap="The density of ΔE value shows the highest error between 3.5 and 4. It is compared to the master data and perceptible at glance.", densityMeanError}
 ```
 
-##Is the behavior differential between targets?
+## Is the behavior differential between targets?
+
 One target is a sigle color card on one sample sheet. One sample can be seen as a big sheet containing 42 color cards. The behavior inbetween the targets is very similar, which is also shown in the relation to the print master discussed in the previouse section.
-The mean ΔE value per target does not show a big range. It ranges from 3.6 to 4.2, which still is at glance.
+The mean ΔE value per target does not show a big range. In the density plot from the previouse section it can be seen that the error ranges from 3.6 to 4.2, which still is at glance.
 
-##Is the behavior differential between color spots?
+The histogram shows the distribution of the targets regarding their  ΔE value to the Master Color Card.
 
-##Is quality possibly related to the intended color?
+```{r fig.cap="The mean ΔE value per target shows that the most target sheets show an error that is only perceptible at glance.", histMeanError}
+```
+## Is the behavior differential between color spots?
+
+## Is quality possibly related to the intended color?
 
 Since the minimal ΔE values, as well as the maximum ΔE values always appear on the same color spot, the Error seems to be very much related to the intended color. 
 
-```{r fig.cap="The comparisson between the intended color taken from the Master Color Card and the color spot with the highest Error is shown below."}
-plot(pressure)
-```
-
-## Including Plots
-
-Embed plot with a caption for Figure 1.
-
-```{r fig.cap="This is a capture for Figure 1."}
-plot(pressure)
+```{r fig.cap="The comparisson between the intended color taken from the Master Color Card and the color spot with the highest Error is shown below.", compareWorseBestDelta}
 ```
