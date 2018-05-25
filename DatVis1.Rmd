@@ -28,6 +28,8 @@ In this excersise we examin color measurements of prints of Douglas color cards.
 
 The colors are represented in Lab color space.
 
+The repository can be found on [Github](https://github.com/amidisturbing/datavis2018).
+
 ## Lab color space
 
 Colors are mathematically described with three components in the Lab* color space:
