@@ -76,33 +76,11 @@ for (i in 1:5) {
 kable(perceptionTable, caption = "On a typical scale, the Delta E value will range from 0 to 100.")
 ```
 
-# Results
+# Analysis
 
 To examine the color distance the colors of the sample color cards and their visibility the samples were compared to the data master
 retrieved from the master color card data.
 
-The steps are descriped in the next subsections.
-
-## Calculating ΔE values
-
-tranposes the matrix
-creates a matrix by repeating the rows to fit the lab data 
-create a matrx that contains the squared distance between the Lab values of master and lab
-
-
-SpotErrorMatrix contains ΔE values for each spot (one row is one colour card)
-
-## Data for visualization
-
-count how many spots belong into each visibility group
-visibility of color changes per card
-
-find min's and max's ΔE values per target
-get the lab values for each element of the index list
-
-convert lab matrix to rgb matrix to plot
-
-# Analysis
 
 ## How do colors behave relative to the print master?
 
