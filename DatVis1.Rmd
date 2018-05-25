@@ -1,5 +1,5 @@
 ---
-title: "Data Visualization Task 1"
+title: "Data Visualization Project 1"
 author: 
 - name: Alexander Jaenisch, Rafaela Neff, Parvin Shakibaei
   affiliation: Beuth University of Applied Science Berlin
@@ -24,7 +24,7 @@ read_chunk('src/script.R')
 ```
 # Introduction
 
-In this excersise we examin color measurements of prints of Douglas color cards. The intended colors for color card production were compared to thirteen large sheets, sampled from production. Each sample sheet contains 42 color cards also refered to as target.
+In this excersise we examine color measurements of Douglas color card prints. The intended colors for color card production were compared to thirteen large sheets, sampled from production. Each sample sheet contains 42 color cards also refered to as target.
 
 The colors are represented in Lab color space.
 
@@ -38,7 +38,7 @@ Colors are mathematically described with three components in the Lab* color spac
 - **a**: color from green to magenta 
 - **b**: color from blue to yellow
 
-The difference between two colors can be descriped by the Δ E formular, which will be covered in the following section.
+The difference between two colors can be described by the Δ E formular, which will be covered in the following section.
 
 ## Defining and interpreting Δ E
 
@@ -50,15 +50,15 @@ In this Analysis the E76 vaue was calculated which got his name from the year it
 
 The formular is
 
-∆E76 = sqrt((∆L)^2 + (∆a)^2 + (∆b)^2)
+$$∆E76 = \sqrt{∆L^2 + ∆a^2 + ∆b^2}$$
 
 where:
 
-∆L = L1 − L2 - difference of luminance.
+∆L = L1 − L2 - difference of luminance
 
-∆a = a1 − a2 - difference of values for coordinate a, ∆b = b1 − b2 - difference of values for coordinate b.
+∆a = a1 − a2 - difference of values for coordinate a
 
-∆b = b1 − b2 - difference of values for coordinate b.
+∆b = b1 − b2 - difference of values for coordinate b
 
 ```{r}
 perceptionTable <- matrix(NA, nrow = 5, ncol = 2, byrow = FALSE)
@@ -78,63 +78,69 @@ kable(perceptionTable, caption = "On a typical scale, the Delta E value will ran
 
 
 # Analysis
->>>>>>> 24e44d0ef9e6c28683b77fdfe6572306e004bf99
 
-To examine the color distance the colors of the sample color cards and their visibility the samples were compared to the data master
-retrieved from the master color card data.
+To analyse the given data the euclidean distances are computed for each spot, each target as well as each sample. The visibility for the human eye can be concluded from the ranges given in the perception table.
+
+## Assignment of color spots to levels of perception
+
+The following histogram contains the target-count (color cards) and their perception level compared to te master.
 
 
-# Analysis
-
-
-## How do colors behave relative to the print master?
-
-It can be seen that the colors have the same relation to the print master. While it is evidently, that there is always one color with the smallest ΔE value regarding the print master, the biggest error almost always appears at the same color spot, too.
-
-The distribution of the 
-
-```{r fig.cap="Distribution of the ∆E values in the 5 visibility levels.", barplotVisLevel}
+```{r fig.cap="Distribution of the ∆E values in the 5 visibility levels. The histogram shows that most of the color spots belong to the third perception level, which means that a human will notice it at glance. The printers are not accurate enough so the settings have to be adjusted or the target specific offset has to be taken care of by the Douglas app.", barplotVisLevel}
 ```
-The mean Error relative to the print master is comparatively low, as the followng density plot is showing.
 
-```{r fig.cap="The density of ΔE value shows the highest error between 3.5 and 4. It is compared to the master data and perceptible at glance.", densityMeanError}
-```
 
 ## Is the behavior differential between targets?
 
-One target is a sigle color card on one sample sheet. One sample can be seen as a big sheet containing 42 color cards. The behavior inbetween the targets is very similar, which is also shown in the relation to the print master discussed in the previouse section.
-The mean ΔE value per target does not show a big range. In the density plot from the previouse section it can be seen that the error ranges from 3.6 to 4.2, which still is at glance.
+One target is a single color card on one sample sheet. One sample can be seen as a big sheet containing 42 color cards.
 
 The histogram shows the distribution of the targets regarding their  ΔE value to the Master Color Card.
 
-```{r fig.cap="The mean ΔE value per target shows that the most target sheets show an error that is only perceptible at glance.", histMeanErrorPerTarget}
+```{r fig.cap="The mean ΔE value per target shows that the most target sheets show an error that is only perceptible at glance. The behavior inbetween the targets is very similar, hence non of the targets fits into the first and the second perception group. All of them can be found in group three and four, which means that there is not one single color card without visible differences in comparison to the master.", histMeanErrorPerTarget}
+```
+
+The density plot shows that the ΔE values for the color cards fit into a normal distribution.
+
+```{r fig.cap="The density of ΔE value shows the highest error between 3.5 and 4. It is compared to the master data and perceptible at glance.", densityMeanErrorPerTarget}
 ```
 
 ## Is the behavior differential between samples?
 
 The mean error of one sample relativ to the print master falls almost in the same range as the mean Error per target, but is 0.3 higher at its smallest value. This is not perceptible for the human eye.
 
-```{r fig.cap="The most samples show a ΔE value between 3.8 and 3.9 compared to the master.", histMeanErrorPerSample}
+```{r fig.cap="If we take all thirteen samples into account we can see that the mean ΔE values between the samples is quite low. This supports our hypothesis that the quality of the printers is almost equal.", histMeanErrorPerSample}
 ```
 
 
-## Is the behavior differential between color spots?
+## Visualization of colors grouped by perception levels
 
-```{r fig.cap="The comparisson between the intended color taken from the Master Color Card and the color spot with the highest Error is shown below.", compareWorseBestDelta}
-```
-## Is quality possibly related to the intended color?
+The following plots show the individual colors that have been printed grouped by their perception levels. As input data all color spots are taken into account. This gives an overview which colorsettings were more precise than others. 
 
-Since the minimal ΔE values, as well as the maximum ΔE values always appear on the same color spot, the Error seems to be very much related to the intended color. 
+The results are visualized in rgb color space.
 
-## More Plots 
-```{r fig.cap="l1", rgbForVisLevelOne}
+```{r fig.cap="", rgbForVisLevelOne}
 ```
 
 ```{r fig.cap="", rgbForVisLevelTwo}
 ```
 
-```{r fig.cap="", rgbForVisLevelThree}
+The amount of colors in level 1 and level 2 is too small to conclude something since it also contains opposite colors.
+
+```{r fig.cap="For level 3 it can be concluded that almost al colors fit in this perception level. This means that probably the settings for all colors have to be tuned to fit the master.", rgbForVisLevelThree}
 ```
 
-```{r fig.cap="", rgbForVisLevelFour}
+```{r fig.cap="For level 4 with the biggest visible difference there are only three colors with a huge distance to the corresponding master color spot. The colors are skintone, brown and violett.", rgbForVisLevelFour}
 ```
+
+## Verification of the previous result
+
+To confirm the visualization of colors grouped by perception levels plotted in the previouse section, a sample was taken and vizualised in rgb color space.
+
+The following picture shows the color with the least perceptible color-difference and the one with the most perceptible one. 
+
+```{r fig.cap="The comparisson between the intended color taken from the Master Color Card and the color spot with the highest Error is shown below. The visualized colors are the same as in the 3D plots, which supports the conclusions.", compareWorseBestDelta}
+```
+
+The color with the smallest ΔE value and the one with biggest seem to appears always at the same color spot on all color cards.That means that the Error seems to be very much related to the intended color.
+The conclusion is that in the case of the worst and the best print result the master was never intended to be used as a template.
+

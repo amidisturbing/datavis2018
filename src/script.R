@@ -48,8 +48,6 @@ for (i in 1:nrow(SpotErrorMatrix)) {
   deltaERangePerCard[i,"Maximum"] <- max(SpotErrorMatrix[i,])
   deltaERangePerCard[i,"MaxIndex"]<-maxIndex
 }
-## @knitr deltaERangePerCardAsTable
-deltaERangePerCardAsTable <- as.table(deltaERangePerCard)
 
 #get the worst and best color spot compared to the master
 maxCol<- deltaERangePerCard[match(colMaxs(deltaERangePerCard),deltaERangePerCard[,3])[3],4]
@@ -181,7 +179,7 @@ rect(-1,0,1,1, col=rgb(worstColorRGB, alpha=1))
 text(0, -0.5, labels = "Master")
 text(0, 0.5, labels = "Lab")
 #3d Plot
-#par(mfrow=c(2,2))
+par(mfrow=c(2,2))
 ## @knitr rgbForVisLevelOne
 scatterplot3d(RgbForVisLevelOne, color = rgb(RgbForVisLevelOne, alpha=1),xlab = "red", ylab = "green",zlab = "blue", main="Level 1")
 ## @knitr rgbForVisLevelTwo
