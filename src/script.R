@@ -1,39 +1,39 @@
 ## @knitr part1
+
+#import necessary libraries
 library(matrixStats)
 library(scatterplot3d)
-#load the data
+
+#load the data into R
 lab <- read.csv2("data/LabMeasurements-Color-Card.csv")
 Master <- read.csv2("data/MasterColorCard.csv")
 
-#t() tranposes the matrix  and c() puts it all into one row
+#transpose the Lab columns of the master matrix to have it one vector
 MasterAsOneRow <- c(t(as.matrix(Master[,9:11])))
 
-#creates a matrix by repeating the rows to fit the lab data 
+#create a matrix by recycling the master vector to fit the sample lab matrix for further computation 
 MasterSameSizeAsLab <- matrix(rep(MasterAsOneRow, 13*42), byrow = TRUE,nrow = 13*42)
 
-#cuts off row and col column from lab data
+#cuts off row and col column from sample lab matrix
 LabWithoutFirstColumns <- lab[,-c(1:2)]
 
-#helper array to get back to lab values after errormatrix was build
+#helper array that can be used to receive the column indexes of the L values from the ΔE matrix
 columnIndexesInLabMatrix<-seq(from=1, to=192,by=3)
 
-#create a matrx that contains the differences between the Lab values of master and lab
+#create a matrx that contains the differences between the sample Lab and  master Lab values
 DeltaMasterLab <- MasterSameSizeAsLab - LabWithoutFirstColumns
 
 #square the differences
 DeltaMasterSquared <- DeltaMasterLab^2
 
-getIndexInLab <- function(IndexFromErrorMatrix){
-  return (((IndexFromErrorMatrix-1)*3)+1)
-}
-
-#SpotErrorMatrix contains Lab Errors for each spot (one row is one colour card)
+#create an empty SpotErrorMatrix that later contains Lab ΔE for each color spot (one row is one colour card)
 SpotErrorMatrix <- matrix(NA, nrow = 546, ncol = 64, byrow = FALSE)
-#fill the empty matrix with the computed errors
+
+#fill the empty matrix with the computed ΔE's
 for (i in 1:ncol(SpotErrorMatrix)) {
   SpotErrorMatrix[,i] <- sqrt(rowSums(DeltaMasterSquared[,(i-1)*3+(1:3)]))
 }
-#find min's and max's
+#compute the minimum ΔE and maximum ΔE per color card
 deltaERangePerCard  <- matrix(NA, nrow = nrow(SpotErrorMatrix), ncol = 4, byrow = FALSE)
 rownames(deltaERangePerCard) <- c(1:nrow(SpotErrorMatrix))
 colnames(deltaERangePerCard) <- c("Minimum","MinIndex","Maximum","MaxIndex")
@@ -48,10 +48,10 @@ for (i in 1:nrow(SpotErrorMatrix)) {
   deltaERangePerCard[i,"Maximum"] <- max(SpotErrorMatrix[i,])
   deltaERangePerCard[i,"MaxIndex"]<-maxIndex
 }
-
+## @knitr deltaERangePerCardAsTable
 deltaERangePerCardAsTable <- as.table(deltaERangePerCard)
 
-# this part is to get the worst and best color spot compared to the master
+#get the worst and best color spot compared to the master
 maxCol<- deltaERangePerCard[match(colMaxs(deltaERangePerCard),deltaERangePerCard[,3])[3],4]
 maxRow<- match(colMaxs(deltaERangePerCard),deltaERangePerCard[,3])[3]
 minRow<- match(colMins(deltaERangePerCard),deltaERangePerCard)[1]
@@ -62,14 +62,14 @@ bestColor <- c(LabWithoutFirstColumns[minRow,columnIndexesInLabMatrix[minCol]],L
 worstColorMaster<- c(MasterAsOneRow[columnIndexesInLabMatrix[maxCol]],MasterAsOneRow[columnIndexesInLabMatrix[maxCol]+1],MasterAsOneRow[columnIndexesInLabMatrix[maxCol]+2])
 bestColorMaster<- c(MasterAsOneRow[columnIndexesInLabMatrix[minCol]],MasterAsOneRow[columnIndexesInLabMatrix[minCol]+1],MasterAsOneRow[columnIndexesInLabMatrix[minCol]+2])
 
-
+#convert the Lab values to rgb
 bestColorRGB <- convertColor(bestColor,from = "Lab", to="sRGB")
 worstColorRGB <-convertColor(worstColor,from = "Lab", to="sRGB")
 worstColorMasterRGB <-convertColor(worstColorMaster,from = "Lab", to="sRGB")
 bestColorMasterRGB <-convertColor(bestColorMaster,from = "Lab", to="sRGB")
 
 
-#count how many spots belong into each visibility group
+#count how many spots belong into each visibility group (perception table)
 VisLevelOne <- sum(SpotErrorMatrix<=1)
 VisLevelTwo <- sum((SpotErrorMatrix>1) & (SpotErrorMatrix<2))
 VisLevelThree <- sum((SpotErrorMatrix>2) & (SpotErrorMatrix<10))
@@ -82,6 +82,7 @@ meanErrorPerTarget <- rowMeans(SpotErrorMatrix)
 #visibility of color changes per sample
 meanErrorPerSample <- c(1:13)
 
+#compute the mean  ΔE per sample
 for (i in 1:13) {
   counter<-i;
   for (x in 1:42){
@@ -91,15 +92,16 @@ for (i in 1:13) {
   meanErrorPerSample[i]<- meanErrorPerSample[i]/42
 }
 
-#try to get back from error to lab values in table
-#get indexes of errors in certain level
+#recompute Lab values from the ΔE matrix
+#get indexes of  ΔE's for the different perception tables
 LumenIndexVisLvlOne <- which(SpotErrorMatrix<=1, arr.ind=TRUE)
 LumenIndexVisLvlTwo <- which(((SpotErrorMatrix>1) & (SpotErrorMatrix<2)), arr.ind=TRUE)
 LumenIndexVisLvlThree <- which(((SpotErrorMatrix>2) & (SpotErrorMatrix<10)), arr.ind=TRUE)
 LumenIndexVisLvlFour <- which(((SpotErrorMatrix>11) & (SpotErrorMatrix<49)), arr.ind=TRUE)
-#create helper to retrieve indexes of L values
+
+#create helper to recompute indexes of L values ( from ΔE matrix)
 columnIndexesInLabMatrix<-seq(from=1, to=192,by=3)
-#create matrix to fill
+# for each perception group create a matrix to be filled
 LabVisLevelOne <- matrix(NA, nrow = nrow(LumenIndexVisLvlOne), ncol = 3, byrow = FALSE)
 LabVisLevelTwo <- matrix(NA, nrow = nrow(LumenIndexVisLvlTwo), ncol = 3, byrow = FALSE)
 LabVisLevelThree <- matrix(NA, nrow = nrow(LumenIndexVisLvlThree), ncol = 3, byrow = FALSE)
@@ -130,7 +132,7 @@ for(i in 1:nrow(LumenIndexVisLvlFour)){
   LabVisLevelFour[i,3]<-LabWithoutFirstColumns[LumenIndexVisLvlFour[i,1],columnIndexesInLabMatrix[LumenIndexVisLvlFour[i,2]]+2]
 }
 
-#convert lab matrix to rgb matrix
+#convert Lab values in the perception matrixes to rgb in a seperate matrix
 RgbForVisLevelOne <- matrix(NA, nrow = nrow(LabVisLevelOne), ncol = 3, byrow = FALSE)
 for(i in 1:nrow(LabVisLevelOne)){
   RgbForVisLevelOne[i,1:3]<-convertColor(LabVisLevelOne[i,1:3],from = "Lab", to="sRGB")

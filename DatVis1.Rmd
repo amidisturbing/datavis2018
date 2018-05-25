@@ -75,6 +75,7 @@ kable(perceptionTable, caption = "On a typical scale, the Delta E value will ran
 ```
 
 # Results
+To examine how many color spots have human visible color differnces in comparison to the master the euclidean distances had to be computed.
 
 To examine the color distance the colors of the sample color cards and their visibility the samples were compared to the data master
 retrieved from the master color card data.
@@ -82,6 +83,11 @@ retrieved from the master color card data.
 The steps are descriped in the next subsections.
 
 ## Calculating ΔE values
+
+First of all the L,a,b columns of the Master Matrix were transposed.
+The array was replicated to fit the Matrix of the other printers.
+That made it easy to use the ΔE Formular to create another Matrix.
+SpotErrorMatrix contains ΔE values for each spot (one row is one colour card)
 
 tranposes the matrix
 creates a matrix by repeating the rows to fit the lab data 
@@ -91,7 +97,7 @@ create a matrx that contains the squared distance between the Lab values of mast
 SpotErrorMatrix contains ΔE values for each spot (one row is one colour card)
 
 ## Data for visualization
-
+In 
 count how many spots belong into each visibility group
 visibility of color changes per card
 
